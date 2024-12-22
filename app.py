@@ -6,24 +6,6 @@ from glob import glob
 import tensorflow as tf
 import IPython
 
-def extract_cqt_segment(segment, target_frames = 30, sr = 10000, hop_length = 128):
-  
-  cqt_features = librosa.feature.chroma_cqt(y = segment, sr = sr, n_chroma = 12, n_octaves = 7, hop_length=hop_length)
-  cqt_features_input = np.zeros((12, target_frames))
-
-  increment = cqt_features.shape[1] // target_frames
-
-  for i in range(12):
-    temp = cqt_features[i]
-    index = 0
-    for j in range(target_frames):
-      cqt_features_input[i][j] = temp[index]
-      index += increment
-
-
-  return cqt_features_input
-
-
 def prepare_audio_for_chord_detection(audio_path = "test.wav", segment_duration=2.0, hop_length=128, sr = 10000):
     # Load the audio file
     y, sr = librosa.load(audio_path, sr=sr)
@@ -40,7 +22,6 @@ def prepare_audio_for_chord_detection(audio_path = "test.wav", segment_duration=
         segment = y[start:start + segment_length]
         
         # Compute CQT chroma for the segment
-        # chroma = extract_cqt_segment(segment)
         chroma = librosa.feature.chroma_cqt(y=segment, sr=sr, hop_length=hop_length)
         
         segments.append({
@@ -79,18 +60,6 @@ def print_all_chords(chordlist):
    st.text(chordStr)
 
 
-def load_model():
-   loaded_model = tf.keras.models.load_model('chord_detection_model.h5', compile=True)
+def load_model(path_to_model = 'chord_detection_model.h5'):
+   loaded_model = tf.keras.models.load_model( path_to_model, compile=True)
    return loaded_model
-    
-
-
-# def main():
-#     # features = prepare_audio_for_chord_detection(audio_path = "wav_files/chords_organ.wav", segment_duration=2, hop_length=128)
-#     # print(features[0]["chroma"])
-#     # chordlist = store_chords(features)
-#     # print_all_chords(chordlist)
-
-
-# if __name__ == "__main__":
-#     main()
