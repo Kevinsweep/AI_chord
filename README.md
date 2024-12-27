@@ -60,14 +60,14 @@ SigmaChord is a chord detection web app that uses AI to identify chords from wav
 
 # User Instructions
 
-## 1. download and put all 3 files in the same folder
+### 1. download and put all 3 files in the same folder
 
-## 2. open the terminal inside that folder and run the command below 
+### 2. open the terminal inside that folder and run the command below 
 
 ```
 streamlit run webV2.py
 ```
 
-## 3. upload your wav file and set the bpm
+### 3. upload your wav file and set the bpm
 
-## 4. click process audio
+### 4. click process audio
